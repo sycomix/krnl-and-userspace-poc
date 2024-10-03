@@ -7,7 +7,7 @@ CXXFLAGS := -std=c++17 -fno-exceptions -fno-rtti
 ifeq ($(shell uname -s),Linux)
     TARGET := ai_inference.o
     KDIR := /lib/modules/$(shell uname -r)/build
-else ifeq($(OS),Windows_NT)
+else ifeq ($(OS),Windows_NT)
     TARGET := ai_inference_win32.o
 else
     $(error Unsupported operating system)
@@ -15,9 +15,9 @@ endif
 
 all:
 ifeq ($(shell uname -s),Linux)
-    $(MAKE) -C $(KDIR) M=$(PWD) modules
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
 else
-    $(CXX) $(CXXFLAGS) -c ai_inference_win32.cpp -o $(TARGET)
+	$(CXX) $(CXXFLAGS) -c ai_inference_win32.cpp -o $(TARGET)
 endif
 
 clean:
