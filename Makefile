@@ -6,6 +6,7 @@ CXXFLAGS := -std=c++17 -fno-exceptions -fno-rtti
 
 ifeq ($(shell uname -s),Linux)
     TARGET := ai_inference.o
+    KDIR := /lib/modules/$(shell uname -r)/build
 else ifeq ($(OS),Windows_NT)
     TARGET := ai_inference_win32.o
 else
@@ -14,14 +15,14 @@ endif
 
 all:
 ifeq ($(shell uname -s),Linux)
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+    $(MAKE) -C $(KDIR) M=$(PWD) modules
 else ifeq ($(OS),Windows_NT)
-	$(CXX) $(CXXFLAGS) -c ai_inference_win32.cpp -o $(TARGET)
+    $(CXX) $(CXXFLAGS) -c ai_inference_win32.cpp -o $(TARGET)
 endif
 
 clean:
 ifeq ($(shell uname -s),Linux)
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+    $(MAKE) -C $(KDIR) M=$(PWD) clean
 else ifeq ($(OS),Windows_NT)
-	rm -f $(TARGET)
+    rm -f $(TARGET)
 endif
