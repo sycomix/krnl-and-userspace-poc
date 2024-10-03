@@ -22,7 +22,7 @@ endif
 
 clean:
 ifeq ($(shell uname -s),Linux)
-    $(MAKE) -C $(KDIR) M=$(PWD) clean
+	$(MAKE) -C $(KDIR) M=$(PWD) clean
 else
     rm -f $(TARGET)
 endif
